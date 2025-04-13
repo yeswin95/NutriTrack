@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalized Diet Planner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #45b849;
+            --secondary: #2196F3;
+            --accent: #FF9800;
+            --dark: #333;
+            --light: #f9f9f9;
+            --gray: #e0e0e0;
+            --dark-gray: #757575;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), #8BC34A);
+            color: white;
+            padding: 25px 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-weight: 300;
+            opacity: 0.9;
+        }
+        
+        .selection-panel {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .condition-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .condition-card {
+            background: var(--light);
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            text-align: center;
+        }
+        
+        .condition-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+        
+        .condition-card.selected {
+            background: #e8f5e9;
+            border-color: var(--primary);
+        }
+        
+        .condition-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .diet-plan {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: none;
+        }
+        
+        .plan-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .day-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+        
+        .day-btn {
+            padding: 8px 15px;
+            background: var(--light);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .day-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .meal-section {
+            margin-bottom: 30px;
+        }
+        
+        .meal-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .meal-icon {
+            margin-right: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .food-card {
+            background: var(--light);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .food-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .food-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+        
+        .food-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .food-desc {
+            font-size: 0.8rem;
+            color: var(--dark-gray);
+        }
+        
+        .nutrition-tips {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        
+        .tips-title {
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        
+        .btn {
+            padding: 10px 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .btn:hover {
+            background: #3e8e41;
+        }
+        
+        @media (max-width: 768px) {
+            .condition-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .food-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            
+            .plan-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Personalized Diet Planner</h1>
+            <p class="subtitle">Get customized meal recommendations based on your health needs</p>
+        </div>
+    </header>
+    
+    <main class="container">
+        <section class="selection-panel" id="selectionPanel">
+            <h2>Select Your Health Condition or Goal</h2>
+            <div class="condition-grid" id="conditionGrid">
+                <!-- Conditions will be added by JavaScript -->
+            </div>
+        </section>
+        
+        <section class="diet-plan" id="dietPlan">
+            <div class="plan-header">
+                <h2>Diet Plan for <span id="selectedCondition">Diabetic Patients</span></h2>
+                <button id="backBtn" class="btn"><i class="fas fa-arrow-left"></i> Back to Selection</button>
+            </div>
+            
+            <div class="day-selector" id="daySelector">
+                <!-- Days will be added by JavaScript -->
+            </div>
+            
+            <div id="dayPlan">
+                <!-- Day plan will be loaded by JavaScript -->
+            </div>
+            
+            <div class="nutrition-tips">
+                <h3 class="tips-title">Nutrition Tips</h3>
+                <div id="nutritionTips">
+                    <!-- Tips will be loaded by JavaScript -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Diet plan data
+        const dietPlans = {
+            'diabetic': {
+                name: 'Diabetic Patients',
+                icon: 'fa-bolt',
+                tips: [
+                    'Focus on low glycemic index foods',
+                    'Balance carbohydrates with protein and healthy fats',
+                    'Eat smaller, more frequent meals',
+                    'Limit added sugars and refined carbs',
+                    'Monitor blood sugar levels regularly'
+                ],
+                days: {
+                    'day1': {
+                        breakfast: [
+                            { name: 'Oatmeal', icon: 'fa-bowl-food', desc: 'With nuts and cinnamon' },
+                            { name: 'Greek Yogurt', icon: 'fa-blender', desc: 'With berries' },
+                            { name: 'Eggs', icon: 'fa-egg', desc: 'Scrambled with spinach' }
+                        ],
+                        lunch: [
+                            { name: 'Grilled Chicken', icon: 'fa-drumstick-bite', desc: 'With quinoa' },
+                            { name: 'Salad', icon: 'fa-leaf', desc: 'Mixed greens with olive oil' },
+                            { name: 'Lentil Soup', icon: 'fa-utensils', desc: 'With vegetables' }
+                        ],
+                        dinner: [
+                            { name: 'Baked Salmon', icon: 'fa-fish', desc: 'With asparagus' },
+                            { name: 'Brown Rice', icon: 'fa-wheat-awn', desc: '1/2 cup serving' },
+                            { name: 'Steamed Broccoli', icon: 'fa-tree', desc: 'With lemon' }
+                        ],
+                        snacks: [
+                            { name: 'Almonds', icon: 'fa-acorn', desc: 'Small handful' },
+                            { name: 'Cheese', icon: 'fa-cheese', desc: 'Small portion' }
+                        ]
+                    },
+                    'day2': {
+                        breakfast: [
+                            { name: 'Avocado Toast', icon: 'fa-bread-slice', desc: 'Whole grain bread' },
+                            { name: 'Smoothie', icon: 'fa-blender', desc: 'Spinach and protein' }
+                        ],
+                        lunch: [
+                            { name: 'Turkey Wrap', icon: 'fa-burrito', desc: 'Whole wheat tortilla' },
+                            { name: 'Vegetable Soup', icon: 'fa-pot-food', desc: 'Low sodium' }
+                        ],
+                        dinner: [
+                            { name: 'Grilled Shrimp', icon: 'fa-shrimp', desc: 'With zucchini noodles' },
+                            { name: 'Cauliflower Rice', icon: 'fa-wheat-awn', desc: 'With herbs' }
+                        ],
+                        snacks: [
+                            { name: 'Celery Sticks', icon: 'fa-carrot', desc: 'With peanut butter' }
+                        ]
+                    },
+                    'day3': {
+                        breakfast: [
+                            { name: 'Chia Pudding', icon: 'fa-bowl-food', desc: 'With almond milk' },
+                            { name: 'Berries', icon: 'fa-apple-whole', desc: 'Mixed berries' }
+                        ],
+                        lunch: [
+                            { name: 'Tuna Salad', icon: 'fa-fish', desc: 'With leafy greens' },
+                            { name: 'Whole Grain Crackers', icon: 'fa-bread-slice', desc: 'Small portion' }
+                        ],
+                        dinner: [
+                            { name: 'Chicken Stir-fry', icon: 'fa-drumstick-bite', desc: 'With vegetables' },
+                            { name: 'Wild Rice', icon: 'fa-wheat-awn', desc: '1/2 cup serving' }
+                        ]
+                    }
+                }
+            },
+            'hypertensive': {
+                name: 'Hypertensive Individuals',
+                icon: 'fa-heart-pulse',
+                tips: [
+                    'Reduce sodium intake to less than 1500mg daily',
+                    'Increase potassium-rich foods like bananas and spinach',
+                    'Focus on whole grains and vegetables',
+                    'Limit processed foods and restaurant meals',
+                    'Monitor blood pressure regularly'
+                ],
+                days: {
+                    'day1': {
+                        breakfast: [
+                            { name: 'Banana Smoothie', icon: 'fa-blender', desc: 'With almond milk' },
+                            { name: 'Whole Grain Toast', icon: 'fa-bread-slice', desc: 'With avocado' }
+                        ],
+                        lunch: [
+                            { name: 'Grilled Salmon', icon: 'fa-fish', desc: 'With sweet potato' },
+                            { name: 'Spinach Salad', icon: 'fa-leaf', desc: 'With olive oil' }
+                        ],
+                        dinner: [
+                            { name: 'Quinoa Bowl', icon: 'fa-bowl-food', desc: 'With vegetables' },
+                            { name: 'Baked Chicken', icon: 'fa-drumstick-bite', desc: 'Herb seasoned' }
+                        ],
+                        snacks: [
+                            { name: 'Walnuts', icon: 'fa-acorn', desc: 'Small handful' }
+                        ]
+                    },
+                    'day2': {
+                        breakfast: [
+                            { name: 'Oatmeal', icon: 'fa-bowl-food', desc: 'With flaxseeds' },
+                            { name: 'Fresh Fruit', icon: 'fa-apple-whole', desc: 'Banana or berries' }
+                        ],
+                        lunch: [
+                            { name: 'Lentil Soup', icon: 'fa-pot-food', desc: 'Low sodium' },
+                            { name: 'Whole Grain Bread', icon: 'fa-bread-slice', desc: 'Small slice' }
+                        ],
+                        dinner: [
+                            { name: 'Grilled Turkey', icon: 'fa-drumstick-bite', desc: 'With roasted veggies' },
+                            { name: 'Mashed Cauliflower', icon: 'fa-tree', desc: 'Garlic flavored' }
+                        ]
+                    }
+                }
+            },
+            'athletes': {
+                name: 'Athletes and Bodybuilders',
+                icon: 'fa-dumbbell',
+                tips: [
+                    'Higher protein intake for muscle repair (1.2-2.0g per kg body weight)',
+                    'Complex carbs for sustained energy',
+                    'Stay hydrated with electrolyte balance',
+                    'Time meals around workouts for optimal performance',
+                    'Include healthy fats for joint health'
+                ],
+                days: {
+                    'day1': {
+                        breakfast: [
+                            { name: 'Protein Pancakes', icon: 'fa-pancakes', desc: 'With berries' },
+                            { name: 'Egg Whites', icon: 'fa-egg', desc: 'Scrambled with veggies' },
+                            { name: 'Oatmeal', icon: 'fa-bowl-food', desc: 'With peanut butter' }
+                        ],
+                        lunch: [
+                            { name: 'Grilled Steak', icon: 'fa-steak', desc: 'With brown rice' },
+                            { name: 'Sweet Potato', icon: 'fa-potato', desc: 'Mashed' },
+                            { name: 'Steamed Broccoli', icon: 'fa-tree', desc: 'Large portion' }
+                        ],
+                        dinner: [
+                            { name: 'Grilled Chicken', icon: 'fa-drumstick-bite', desc: 'With quinoa' },
+                            { name: 'Roasted Veggies', icon: 'fa-carrot', desc: 'Mixed variety' },
+                            { name: 'Avocado', icon: 'fa-avocado', desc: 'Half' }
+                        ],
+                        snacks: [
+                            { name: 'Protein Shake', icon: 'fa-blender', desc: 'Post-workout' },
+                            { name: 'Cottage Cheese', icon: 'fa-cheese', desc: 'Before bed' }
+                        ]
+                    },
+                    'day2': {
+                        breakfast: [
+                            { name: 'Greek Yogurt', icon: 'fa-blender', desc: 'With granola' },
+                            { name: 'Whole Eggs', icon: 'fa-egg', desc: '3 eggs' },
+                            { name: 'Whole Wheat Toast', icon: 'fa-bread-slice', desc: '2 slices' }
+                        ],
+                        lunch: [
+                            { name: 'Grilled Salmon', icon: 'fa-fish', desc: 'Large portion' },
+                            { name: 'Quinoa', icon: 'fa-wheat-awn', desc: '1 cup cooked' },
+                            { name: 'Asparagus', icon: 'fa-tree', desc: 'Steamed' }
+                        ],
+                        dinner: [
+                            { name: 'Lean Beef', icon: 'fa-steak', desc: 'With mushrooms' },
+                            { name: 'Brown Rice', icon: 'fa-wheat-awn', desc: '1 cup cooked' },
+                            { name: 'Green Beans', icon: 'fa-carrot', desc: 'Steamed' }
+                        ]
+                    }
+                }
+            },
+            'pregnant': {
+                name: 'Pregnant Women',
+                icon: 'fa-person-pregnant',
+                tips: [
+                    'Increase folic acid intake (leafy greens, fortified grains)',
+                    'Adequate iron for blood volume expansion',
+                    'Calcium for fetal bone development',
+                    'Small frequent meals to manage nausea',
+                    'Stay hydrated and limit caffeine'
+                ],
+                days: {
+                    'day1': {
+                        breakfast: [
+                            { name: 'Fortified Cereal', icon: 'fa-bowl-food', desc: 'With milk' },
+                            { name: 'Orange Juice', icon: 'fa-glass-water', desc: 'Fortified with calcium' }
+                        ],
+                        lunch: [
+                            { name: 'Spinach Salad', icon: 'fa-leaf', desc: 'With chickpeas' },
+                            { name: 'Whole Grain Bread', icon: 'fa-bread-slice', desc: 'Small slice' }
+                        ],
+                        dinner: [
+                            { name: 'Grilled Chicken', icon: 'fa-drumstick-bite', desc: 'With sweet potato' },
+                            { name: 'Steamed Broccoli', icon: 'fa-tree', desc: 'With lemon' }
+                        ]
+                    }
+                }
+            },
+            'weightloss': {
+                name: 'Weight Loss',
+                icon: 'fa-weight-scale',
+                tips: [
+                    'Create calorie deficit (500-750 kcal/day)',
+                    'Focus on high-volume, low-calorie foods',
+                    'Increase protein for satiety',
+                    'Limit processed foods and sugary drinks',
+                    'Combine with regular exercise'
+                ],
+                days: {
+                    'day1': {
+                        breakfast: [
+                            { name: 'Vegetable Omelet', icon: 'fa-egg', desc: '3 egg whites + veggies' },
+                            { name: 'Grapefruit', icon: 'fa-apple-whole', desc: 'Half' }
+                        ],
+                        lunch: [
+                            { name: 'Grilled Chicken Salad', icon: 'fa-leaf', desc: 'Large portion' },
+                            { name: 'Vinaigrette', icon: 'fa-bottle-droplet', desc: '1 tbsp' }
+                        ],
+                        dinner: [
+                            { name: 'Baked Fish', icon: 'fa-fish', desc: 'With asparagus' },
+                            { name: 'Quinoa', icon: 'fa-wheat-awn', desc: '1/2 cup' }
+                        ]
+                    }
+                }
+            }
+            // Additional conditions can be added following the same pattern
+        };
+        
+        // Available conditions
+        const conditions = [
+            { id: 'diabetic', name: 'Diabetic Patients', icon: 'fa-bolt' },
+            { id: 'hypertensive', name: 'Hypertensive Individuals', icon: 'fa-heart-pulse' },
+            { id: 'athletes', name: 'Athletes and Bodybuilders', icon: 'fa-dumbbell' },
+            { id: 'pregnant', name: 'Pregnant Women', icon: 'fa-person-pregnant' },
+            { id: 'weightloss', name: 'Weight Loss', icon: 'fa-weight-scale' }
+            // Additional conditions can be added here
+        ];
+        
+        // DOM elements
+        const conditionGrid = document.getElementById('conditionGrid');
+        const dietPlanSection = document.getElementById('dietPlan');
+        const selectionPanel = document.getElementById('selectionPanel');
+        const selectedCondition = document.getElementById('selectedCondition');
+        const daySelector = document.getElementById('daySelector');
+        const dayPlan = document.getElementById('dayPlan');
+        const nutritionTips = document.getElementById('nutritionTips');
+        const backBtn = document.getElementById('backBtn');
+        
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            renderConditions();
+            setupEventListeners();
+        });
+        
+        // Render condition cards
+        function renderConditions() {
+            conditionGrid.innerHTML = '';
+            
+            conditions.forEach(condition => {
+                const card = document.createElement('div');
+                card.className = 'condition-card';
+                card.dataset.id = condition.id;
+                
+                card.innerHTML = `
+                    <div class="condition-icon">
+                        <i class="fas ${condition.icon}"></i>
+                    </div>
+                    <h3>${condition.name}</h3>
+                `;
+                
+                conditionGrid.appendChild(card);
+            });
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            // Condition selection
+            conditionGrid.addEventListener('click', function(e) {
+                const card = e.target.closest('.condition-card');
+                if (card) {
+                    const conditionId = card.dataset.id;
+                    showDietPlan(conditionId);
+                }
+            });
+            
+            // Back button
+            backBtn.addEventListener('click', function() {
+                dietPlanSection.style.display = 'none';
+                selectionPanel.style.display = 'block';
+            });
+        }
+        
+        // Show diet plan for selected condition
+        function showDietPlan(conditionId) {
+            const plan = dietPlans[conditionId];
+            
+            if (!plan) {
+                alert('Diet plan not available yet for this condition');
+                return;
+            }
+            
+            // Update UI
+            selectionPanel.style.display = 'none';
+            dietPlanSection.style.display = 'block';
+            selectedCondition.textContent = plan.name;
+            
+            // Render days
+            renderDaySelector(plan.days);
+            
+            // Render first day by default
+            const firstDay = Object.keys(plan.days)[0];
+            renderDayPlan(plan.days[firstDay]);
+            
+            // Render tips
+            renderNutritionTips(plan.tips);
+        }
+        
+        // Render day selector
+        function renderDaySelector(days) {
+            daySelector.innerHTML = '';
+            
+            Object.keys(days).forEach((day, index) => {
+                const dayBtn = document.createElement('button');
+                dayBtn.className = 'day-btn';
+                if (index === 0) dayBtn.classList.add('active');
+                dayBtn.textContent = `Day ${index + 1}`;
+                dayBtn.dataset.day = day;
+                
+                dayBtn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    document.querySelectorAll('.day-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Render the selected day's plan
+                    renderDayPlan(days[this.dataset.day]);
+                });
+                
+                daySelector.appendChild(dayBtn);
+            });
+        }
+        
+        // Render day plan
+        function renderDayPlan(day) {
+            dayPlan.innerHTML = '';
+            
+            for (const [meal, foods] of Object.entries(day)) {
+                const mealSection = document.createElement('div');
+                mealSection.className = 'meal-section';
+                
+                const mealTitle = document.createElement('h3');
+                mealTitle.className = 'meal-title';
+                mealTitle.innerHTML = `
+                    <i class="fas ${getMealIcon(meal)} meal-icon"></i>
+                    ${capitalizeFirstLetter(meal)}
+                `;
+                
+                const foodGrid = document.createElement('div');
+                foodGrid.className = 'food-grid';
+                
+                foods.forEach(food => {
+                    const foodCard = document.createElement('div');
+                    foodCard.className = 'food-card';
+                    foodCard.innerHTML = `
+                        <div class="food-icon">
+                            <i class="fas ${food.icon}"></i>
+                        </div>
+                        <div class="food-name">${food.name}</div>
+                        <div class="food-desc">${food.desc}</div>
+                    `;
+                    foodGrid.appendChild(foodCard);
+                });
+                
+                mealSection.appendChild(mealTitle);
+                mealSection.appendChild(foodGrid);
+                dayPlan.appendChild(mealSection);
+            }
+        }
+        
+        // Render nutrition tips
+        function renderNutritionTips(tips) {
+            nutritionTips.innerHTML = '';
+            
+            const tipsList = document.createElement('ul');
+            tipsList.style.listStylePosition = 'inside';
+            tipsList.style.paddingLeft = '10px';
+            
+            tips.forEach(tip => {
+                const tipItem = document.createElement('li');
+                tipItem.textContent = tip;
+                tipItem.style.marginBottom = '8px';
+                tipsList.appendChild(tipItem);
+            });
+            
+            nutritionTips.appendChild(tipsList);
+        }
+        
+        // Helper functions
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+        
+        function getMealIcon(meal) {
+            switch(meal) {
+                case 'breakfast': return 'fa-sun';
+                case 'lunch': return 'fa-utensils';
+                case 'dinner': return 'fa-moon';
+                case 'snacks': return 'fa-apple-whole';
+                default: return 'fa-plate-wheat';
+            }
+        }
+    </script>
+</body>
+</html>

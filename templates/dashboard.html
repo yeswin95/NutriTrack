@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriTrack - Your Nutrition Dashboard</title>
+    <style>
+        :root {
+            --primary: #2ecc71;
+            --secondary: #27ae60;
+            --background: #f9f9f9;
+            --text: #333;
+            --light-gray: #eee;
+            --card-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 24px;
+            margin-right: 15px;
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            background-color: var(--secondary);
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .dashboard-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+        
+        .dashboard-date {
+            color: #888;
+            font-size: 1rem;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto;
+            gap: 20px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .card-wide {
+            grid-column: span 2;
+        }
+        
+        .card-tall {
+            grid-row: span 2;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .card-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+        
+        .nutrient-progress {
+            margin: 15px 0;
+        }
+        
+        .nutrient-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: var(--light-gray);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 5px;
+        }
+        
+        .meal-list {
+            list-style: none;
+        }
+        
+        .meal-item {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .meal-item:last-child {
+            border-bottom: none;
+        }
+        
+        .meal-name {
+            display: flex;
+            align-items: center;
+        }
+        
+        .meal-icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .meal-calories {
+            font-weight: bold;
+        }
+        
+        .water-tracker {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        
+        .water-glass {
+            width: 30px;
+            height: 40px;
+            background-color: #e0f7fa;
+            border-radius: 0 0 15px 15px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .water-glass.filled {
+            background-color: #03a9f4;
+        }
+        
+        .water-counter {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-top: 10px;
+            color: var(--primary);
+        }
+        
+        .add-meal-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+            width: 100%;
+        }
+        
+        .add-meal-btn:hover {
+            background-color: var(--secondary);
+        }
+        
+        .diet-plan-day {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .diet-plan-day:last-child {
+            border-bottom: none;
+        }
+        
+        .day-header {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .chart-container {
+            height: 200px;
+            position: relative;
+        }
+        
+        .chart-bar {
+            position: absolute;
+            bottom: 0;
+            width: 12%;
+            background-color: var(--primary);
+            border-radius: 4px 4px 0 0;
+            transition: height 1s ease;
+        }
+        
+        .chart-axis {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 1px;
+            background-color: #ddd;
+        }
+        
+        .chart-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            color: #888;
+            font-size: 0.8rem;
+        }
+        
+        .hidden-form {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .form-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .form-buttons button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .save-btn {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .cancel-btn {
+            background-color: #ddd;
+        }
+        
+        @media (max-width: 900px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .card-wide {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <div class="logo-icon">
+                <svg class="svg-inline--fa fa-leaf" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="leaf" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M272 96c-78.6 0-145.1 51.5-167.7 122.5c33.6-17 71.5-26.5 111.7-26.5h88c8.8 0 16 7.2 16 16s-7.2 16-16 16H288 216s0 0 0 0c-16.6 0-32.7 1.9-48.2 5.4c-25.9 5.9-50 16.4-71.4 30.7c0 0 0 0 0 0C38.3 298.8 0 364.9 0 440v16c0 13.3 10.7 24 24 24s24-10.7 24-24V440c0-48.7 20.7-92.5 53.8-123.2C121.6 392.3 190.3 448 272 448l1 0c132.1-.7 239-130.9 239-291.4c0-42.6-7.5-83.1-21.1-119.6c-2.6-6.9-12.7-6.6-16.2-.1C455.9 72.1 418.7 96 376 96L272 96z"></path></svg>
+                <i class="fas fa-leaf"></i>
+            </div>
+            <div class="logo-text">NutriTrack</div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active">Dashboard</a></li>
+                <li><a href="#">Meal Plans</a></li>
+                <li><a href="#">Recipes</a></li>
+                <li><a href="#">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <div class="dashboard-header">
+            <h1 class="dashboard-title">Your Nutrition Dashboard</h1>
+            <div class="dashboard-date" id="current-date">April 11, 2025</div>
+        </div>
+        
+        <div class="dashboard-grid">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Daily Calories</h2>
+                </div>
+                <div class="nutrient-progress">
+                    <div class="nutrient-label">
+                        <span>Consumed</span>
+                        <span>1450 / 2000 cal</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 72.5%"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Water Intake</h2>
+                </div>
+                <div class="water-tracker">
+                    <div class="water-glass filled"></div>
+                    <div class="water-glass filled"></div>
+                    <div class="water-glass filled"></div>
+                    <div class="water-glass filled"></div>
+                    <div class="water-glass"></div>
+                    <div class="water-glass"></div>
+                    <div class="water-glass"></div>
+                    <div class="water-glass"></div>
+                </div>
+                <div class="water-counter">4/8 glasses</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Macronutrients</h2>
+                </div>
+                <div class="nutrient-progress">
+                    <div class="nutrient-label">
+                        <span>Protein</span>
+                        <span>65 / 100g</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 65%; background-color: #3498db"></div>
+                    </div>
+                </div>
+                <div class="nutrient-progress">
+                    <div class="nutrient-label">
+                        <span>Carbs</span>
+                        <span>150 / 250g</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 60%; background-color: #f39c12"></div>
+                    </div>
+                </div>
+                <div class="nutrient-progress">
+                    <div class="nutrient-label">
+                        <span>Fat</span>
+                        <span>40 / 65g</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 61.5%; background-color: #e74c3c"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card card-wide">
+                <div class="card-header">
+                    <h2 class="card-title">Today's Meals</h2>
+                </div>
+                <ul class="meal-list">
+                    <li class="meal-item">
+                        <div class="meal-name">
+                            <span class="meal-icon">🍳</span>
+                            <span>Breakfast: Spinach Omelette with Toast</span>
+                        </div>
+                        <div class="meal-calories">350 cal</div>
+                    </li>
+                    <li class="meal-item">
+                        <div class="meal-name">
+                            <span class="meal-icon">🥗</span>
+                            <span>Lunch: Quinoa Salad with Grilled Chicken</span>
+                        </div>
+                        <div class="meal-calories">520 cal</div>
+                    </li>
+                    <li class="meal-item">
+                        <div class="meal-name">
+                            <span class="meal-icon">🍎</span>
+                            <span>Snack: Apple with Almond Butter</span>
+                        </div>
+                        <div class="meal-calories">180 cal</div>
+                    </li>
+                    <li class="meal-item">
+                        <div class="meal-name">
+                            <span class="meal-icon">🍽️</span>
+                            <span>Dinner: Salmon with Roasted Vegetables</span>
+                        </div>
+                        <div class="meal-calories">400 cal</div>
+                    </li>
+                </ul>
+                <button class="add-meal-btn" id="add-meal-btn">Add New Meal</button>
+                <div class="hidden-form" id="meal-form">
+                    <div class="form-group">
+                        <label for="meal-type">Meal Type</label>
+                        <select id="meal-type">
+                            <option value="breakfast">Breakfast</option>
+                            <option value="lunch">Lunch</option>
+                            <option value="dinner">Dinner</option>
+                            <option value="snack">Snack</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="meal-name">Meal Name</label>
+                        <input type="text" id="meal-name" placeholder="Enter meal name">
+                    </div>
+                    <div class="form-group">
+                        <label for="meal-calories">Calories</label>
+                        <input type="number" id="meal-calories" placeholder="Enter calories">
+                    </div>
+                    <div class="form-buttons">
+                        <button class="cancel-btn" id="cancel-meal">Cancel</button>
+                        <button class="save-btn" id="save-meal">Save Meal</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Weekly Weight</h2>
+                </div>
+                <div class="chart-container" id="weight-chart">
+                    <div class="chart-axis"></div>
+                    <div class="chart-bar" style="left: 0%; height: 60%"></div>
+                    <div class="chart-bar" style="left: 12.5%; height: 62%"></div>
+                    <div class="chart-bar" style="left: 25%; height: 58%"></div>
+                    <div class="chart-bar" style="left: 37.5%; height: 57%"></div>
+                    <div class="chart-bar" style="left: 50%; height: 56%"></div>
+                    <div class="chart-bar" style="left: 62.5%; height: 55%"></div>
+                    <div class="chart-bar" style="left: 75%; height: 54%"></div>
+                </div>
+                <div class="chart-labels">
+                    <span>Apr 5</span>
+                    <span>Apr 6</span>
+                    <span>Apr 7</span>
+                    <span>Apr 8</span>
+                    <span>Apr 9</span>
+                    <span>Apr 10</span>
+                    <span>Apr 11</span>
+                </div>
+            </div>
+            
+            <div class="card card-tall">
+                <div class="card-header">
+                    <h2 class="card-title">Weekly Diet Plan</h2>
+                </div>
+                <div class="diet-plan-day">
+                    <div class="day-header">Monday</div>
+                    <p>Breakfast: Greek yogurt with berries</p>
+                    <p>Lunch: Mediterranean wrap</p>
+                    <p>Dinner: Stir-fry vegetables with tofu</p>
+                </div>
+                <div class="diet-plan-day">
+                    <div class="day-header">Tuesday</div>
+                    <p>Breakfast: Avocado toast with eggs</p>
+                    <p>Lunch: Lentil soup with quinoa</p>
+                    <p>Dinner: Grilled fish with sweet potato</p>
+                </div>
+                <div class="diet-plan-day">
+                    <div class="day-header">Wednesday</div>
+                    <p>Breakfast: Smoothie bowl</p>
+                    <p>Lunch: Chicken and vegetable salad</p>
+                    <p>Dinner: Vegetable lasagna</p>
+                </div>
+                <div class="diet-plan-day">
+                    <div class="day-header">Thursday</div>
+                    <p>Breakfast: Oatmeal with nuts and fruits</p>
+                    <p>Lunch: Tuna wrap with vegetables</p>
+                    <p>Dinner: Turkey and vegetable stir-fry</p>
+                </div>
+            </div>
+            
+            <div class="card card-wide">
+                <div class="card-header">
+                    <h2 class="card-title">Nutrition Insights</h2>
+                </div>
+                <div class="chart-container" id="nutrients-chart">
+                    <div class="chart-axis"></div>
+                    <div class="chart-bar" style="left: 5%; height: 80%; background-color: #3498db"></div>
+                    <div class="chart-bar" style="left: 25%; height: 65%; background-color: #f39c12"></div>
+                    <div class="chart-bar" style="left: 45%; height: 40%; background-color: #e74c3c"></div>
+                    <div class="chart-bar" style="left: 65%; height: 30%; background-color: #9b59b6"></div>
+                    <div class="chart-bar" style="left: 85%; height: 50%; background-color: #1abc9c"></div>
+                </div>
+                <div class="chart-labels">
+                    <span>Protein</span>
+                    <span>Carbs</span>
+                    <span>Fat</span>
+                    <span>Sugar</span>
+                    <span>Fiber</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Set current date
+        document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        });
+        
+        // Water glass tracking
+        const waterGlasses = document.querySelectorAll('.water-glass');
+        const waterCounter = document.querySelector('.water-counter');
+        
+        waterGlasses.forEach((glass, index) => {
+            glass.addEventListener('click', () => {
+                let count = 0;
+                
+                waterGlasses.forEach((g, i) => {
+                    if (i <= index) {
+                        g.classList.add('filled');
+                        count++;
+                    } else {
+                        g.classList.remove('filled');
+                    }
+                });
+                
+                waterCounter.textContent = `${count}/8 glasses`;
+            });
+        });
+        
+        // Toggle meal form
+        const addMealBtn = document.getElementById('add-meal-btn');
+        const mealForm = document.getElementById('meal-form');
+        const cancelMealBtn = document.getElementById('cancel-meal');
+        const saveMealBtn = document.getElementById('save-meal');
+        
+        addMealBtn.addEventListener('click', () => {
+            mealForm.style.display = 'block';
+            addMealBtn.style.display = 'none';
+        });
+        
+        cancelMealBtn.addEventListener('click', () => {
+            mealForm.style.display = 'none';
+            addMealBtn.style.display = 'block';
+        });
+        
+        saveMealBtn.addEventListener('click', () => {
+            const mealType = document.getElementById('meal-type').value;
+            const mealName = document.getElementById('meal-name').value;
+            const mealCalories = document.getElementById('meal-calories').value;
+            
+            if (mealName && mealCalories) {
+                const mealList = document.querySelector('.meal-list');
+                
+                // Create emoji based on meal type
+                let emoji = '🍽️';
+                if (mealType === 'breakfast') emoji = '🍳';
+                else if (mealType === 'lunch') emoji = '🥗';
+                else if (mealType === 'dinner') emoji = '🍲';
+                else if (mealType === 'snack') emoji = '🍎';
+                
+                const newMeal = document.createElement('li');
+                newMeal.className = 'meal-item';
+                newMeal.innerHTML = `
+                    <div class="meal-name">
+                        <span class="meal-icon">${emoji}</span>
+                        <span>${mealType.charAt(0).toUpperCase() + mealType.slice(1)}: ${mealName}</span>
+                    </div>
+                    <div class="meal-calories">${mealCalories} cal</div>
+                `;
+                
+                mealList.appendChild(newMeal);
+                
+                // Update calorie counter
+                const calorieLabel = document.querySelector('.nutrient-label span:last-child');
+                const currentCalories = parseInt(calorieLabel.textContent.split('/')[0].trim());
+                const newCalories = currentCalories + parseInt(mealCalories);
+                calorieLabel.textContent = `${newCalories} / 2000 cal`;
+                
+                // Update progress bar
+                const calorieProgress = document.querySelector('.nutrient-progress .progress-fill');
+                calorieProgress.style.width = `${(newCalories / 2000) * 100}%`;
+                
+                // Reset form
+                document.getElementById('meal-name').value = '';
+                document.getElementById('meal-calories').value = '';
+                mealForm.style.display = 'none';
+                addMealBtn.style.display = 'block';
+            }
+        });
+
+        /**
+         * NUTRITION DASHBOARD EASTER EGG
+         * 
+         * The Easter egg triggers when users type "yummy" anywhere on the page
+         */
+        let keystrokeBuffer = '';
+        const secretCode = 'yummy';
+
+        // Listen for keystrokes
+        document.addEventListener('keydown', (event) => {
+          // Add the key to the buffer
+          keystrokeBuffer += event.key.toLowerCase();
+          
+          // Keep the buffer the same length as the secret code
+          if (keystrokeBuffer.length > secretCode.length) {
+            keystrokeBuffer = keystrokeBuffer.substring(keystrokeBuffer.length - secretCode.length);
+          }
+          
+          // Check if the buffer matches the secret code
+          if (keystrokeBuffer === secretCode) {
+            triggerEasterEgg();
+          }
+        });
+
+        // Function to trigger the Easter egg
+        function triggerEasterEgg() {
+          // Create container for the animation if it doesn't exist
+          let container = document.getElementById('easter-egg-container');
+          if (!container) {
+            container = document.createElement('div');
+            container.id = 'easter-egg-container';
+            document.body.appendChild(container);
+            
+            // Style the container
+            Object.assign(container.style, {
+              position: 'fixed',
+              top: '0',
+              left: '0',
+              width: '100%',
+              height: '100%',
+              zIndex: '9999',
+              pointerEvents: 'none',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            });
+          }
+          
+          // Create and animate healthy food emojis
+          const emojis = ['🥑', '🥦', '🍎', '🥕', '🍓', '🥝', '🍗', '🥚', '🍤', '🍒'];
+          
+          for (let i = 0; i < 20; i++) {
+            setTimeout(() => {
+              const emoji = document.createElement('div');
+              emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+              container.appendChild(emoji);
+              
+              // Random positions
+              const startX = Math.random() * 100;
+              const endY = -20;
+              
+              // Style the emoji
+              Object.assign(emoji.style, {
+                position: 'absolute',
+                fontSize: `${Math.random() * 20 + 30}px`,
+                left: `${startX}vw`,
+                top: '120vh',
+                opacity: '1',
+                transition: 'all 3s ease-out',
+                transform: 'rotate(0deg)'
+              });
+              
+              // Trigger animation
+              setTimeout(() => {
+                Object.assign(emoji.style, {
+                  top: `${endY}vh`,
+                  opacity: '0',
+                  transform: `rotate(${Math.random() * 360}deg)`
+                });
+              }, 50);
+              
+              // Remove emoji after animation
+              setTimeout(() => {
+                emoji.remove();
+              }, 3100);
+            }, i * 200);
+          }
+          
+          // Create a message that appears in the center
+          setTimeout(() => {
+            const message = document.createElement('div');
+            message.textContent = "You found the secret! Eating healthy is a superpower! 💪";
+            container.appendChild(message);
+            
+            // Style the message
+            Object.assign(message.style, {
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              backgroundColor: 'rgba(255, 255, 255, 0.9)',
+              padding: '20px',
+              borderRadius: '10px',
+              boxShadow: '0 0 20px rgba(0, 0, 0, 0.2)',
+              fontSize: '24px',
+              fontWeight: 'bold',
+              color: '#2ecc71',
+              opacity: '0',
+              transition: 'opacity 1s ease-in-out'
+            });
+            
+            // Animate the message
+            setTimeout(() => {
+              message.style.opacity = '1';
+            }, 100);
+            
+            // Remove the message
+            setTimeout(() => {
+              message.style.opacity = '0';
+              setTimeout(() => {
+                message.remove();
+              }, 1000);
+            }, 3000);
+          }, 1000);
+          
+          // Play a cheerful sound
+          const audio = new Audio('data:audio/wav;base64,//uQRAAAAWMSLwUIYAAsYkXgoQwAEaYLWfkWgAI0wWs/ItAAAGDgYtAgAyN+QWaAAihwMWm4G8QQRDiMcCBcH3Cc+CDv/7xA4Tvh9Rz/y8QADBwMWgQAZG/ILNAARQ4GLTcDeIIIhxGOBAuD7hOfBB3/94gcJ3w+o5/5eIAIAAAVwWgQAVQ2ORaIQwEMAJiDg95G4nQL7mQVWI6GwRcfsZAcsKkJvxgxEjzFUgfHoSQ9Qq7KNwqHwuB13MA4a1q/DmBrHgPcmjiGoh//EwC5nGPEmS4RcfkVKOhJf+WOgoxJclFz3kgn//dBA+ya1GhurNn8zb//9NNutNuhz31f////9vt///z+IdAEAAAK4LQIAKobHItEIYCGAExBwe8jcToF9zIKrEdDYIuP2MgOWFSE34wYiR5iqQPj0JIeoVdlG4VD4XA67mAcNa1fhzA1jwHuTRxDUQ//iYBczjHiTJcIuPyKlHQkv/LHQUYkuSi57yQT//uggfZNajQ3Vmz+Zt//+mm3Wm3Q576v////+32///5/EOgAAADVghQAAAAA//uQZAUAB1WI0PZugAAAAAoQwAAAEk3nRd2qAAAAACiDgAAAAAAABCqEEQRLCgwpBGMlJkIz8jKhGvj4k6jzRnqasNKIeoh5gI7BJaC1A1AoNBjJgbyApVS4IDlZgDU5WUAxEKDNmmALHzZp0Fkz1FMTmGFl1FMEyodIavcCAUHDWrKAIA4aa2oCgILEBupZgHvAhEBcZ6joQBxS76AgccrFlczBvKLC0QI2cBoCFvfTDAo7eoOQInqDPBtvrDEZBNYN5xwNwxQRfw8ZQ5wQVLvO8OYU+mHvFLlDh05Mdg7BT6YrRPpCBznMB2r//xKJjyyOh+cImr2/4doscwD6neZjuZR4AgAABYAAAABy1xcdQtxYBYYZdifkUDgzzXaXn98Z0oi9ILU5mBjFANmRwlVJ3/6jYDAmxaiDG3/6xjQQCCKkRb/6kg/wW+kSJ5//rLobkLSiKmqP/0ikJuDaSaSf/6JiLYLEYnW/
