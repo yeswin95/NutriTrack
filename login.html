@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NutriTrack - Diet Planner Login</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+<link rel="stylesheet" href="index2.css">
+<link rel="stylesheet" href="index25.css">
+
+
+</head>
+<body>
+<!-- Login/Register Page -->
+<div class="container" id="auth-page">
+<div class="auth-card">
+<div class="sidebar">
+<div class="sidebar-bg"></div>
+<div class="sidebar-content">
+<div class="logo">
+<div class="logo-icon">
+<i class="fas fa-leaf"></i>
+</div>
+<div class="logo-text">NutriTrack</div>
+</div>
+<h1>Welcome to Your Personal Diet Planner</h1>
+<p>Track your nutrition, create meal plans, and achieve your health goals with our powerful diet planning tools.</p>
+<div class="features">
+<div class="feature-item">
+<div class="feature-icon">
+<i class="fas fa-check-circle"></i>
+</div>
+<div>Custom meal plans based on your goals</div>
+</div>
+<div class="feature-item">
+<div class="feature-icon">
+<i class="fas fa-check-circle"></i>
+</div>
+<div>Track macros and nutritional intake</div>
+</div>
+<div class="feature-item">
+<div class="feature-icon">
+<i class="fas fa-check-circle"></i>
+</div>
+<div>Access to thousands of healthy recipes</div>
+</div>
+</div>
+</div>
+</div>
+<div class="main-content">
+<div class="tabs">
+<div class="tab active" data-tab="login">Login</div>
+<div class="tab" data-tab="register">Register</div>
+</div>
+<!-- Login Form -->
+<div class="tab-content active" id="login-content">
+<div class="form-container">
+<div class="alert alert-error" id="login-error"></div>
+<form action="/login" id="login-form" method="post">
+<div class="form-group">
+<label for="login-email">Email Address</label>
+<input class="form-control" id="login-email" name="email" placeholder="Enter your email" required="" type="email"/>
+</div>
+<div class="form-group">
+<label for="login-password">Password</label>
+<input class="form-control" id="login-password" name="password" placeholder="Enter your password" required="" type="password"/>
+</div>
+<div class="form-check">
+<input id="remember-me" name="remember" type="checkbox"/>
+<label for="remember-me">Remember me</label>
+</div>
+<button class="btn btn-primary" type="submit" onclick="window.location.href='dash.html'">Sign In</button>
+<div class="divider">
+</div>
+<!----
+                            <button type="button" class="btn btn-google" id="google-login">
+                                <i class="fab fa-google"></i> Continue with Google
+                            </button>
+                        -->
+<div class="form-footer">
+<a href="#" id="forgot-password">Forgot your password?</a>
+</div>
+</form>
+</div>
+</div>
+<!-- Registration Form -->
+<div class="tab-content" id="register-content">
+<div class="form-container">
+<div class="alert alert-error" id="register-error"></div>
+<form action="/register" id="register-form" method="post">
+<div class="form-group">
+<label for="register-name">Full Name</label>
+<input class="form-control" id="register-name" name="name" placeholder="Enter your full name" required="" type="text"/>
+</div>
+<div class="form-group">
+<label for="register-email">Email Address</label>
+<input class="form-control" id="register-email" name="email" placeholder="Enter your email" required="" type="email"/>
+</div>
+<div class="form-group">
+<label for="register-password">Password</label>
+<input class="form-control" id="register-password" name="password" placeholder="Create a password" required="" type="password"/>
+</div>
+<div class="form-group">
+<label for="confirm-password">Confirm Password</label>
+<input class="form-control" id="confirm-password" name="confirm_password" placeholder="Confirm your password" required="" type="password"/>
+</div>
+<div class="form-check">
+<input id="terms" name="terms" required="" type="checkbox"/>
+<label for="terms">I agree to the Terms and Privacy Policy</label>
+</div>
+<button class="btn btn-primary" type="submit">Create Account</button>
+<div class="divider">
+<span>OR</span>
+</div>
+<!-----
+                            <button type="button" class="btn btn-google" id="google-register">
+                                <i class="fab fa-google"></i> Sign up with Google
+                            </button>
+                            --->
+<div class="form-footer">
+                                Already have an account? <a class="switch-tab" data-tab="login" href="#">Sign in</a>
+</div>
+</form>
+</div>
+</div>
+<!-- Logout Content (Initially Hidden) -->
+<div class="tab-content" id="logout-content">
+<div class="logout-container">
+<div class="success-icon">
+<i class="fas fa-check-circle"></i>
+</div>
+<h2>You've Been Login Successfully</h2>
+<p>Thank you for using NutriTrack.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<footer>
+    <div class="container">
+      <p>© 2025 NutriTrack. All rights reserved.</p>
+    </div>
+  </footer>
+<script>
+
+const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+                
+                // Only switch between login and register tabs
+                if (tabId === 'login' || tabId === 'register') {
+                    // Update active tab
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    // Update active content
+                    tabContents.forEach(content => {
+                        if (content.id === `${tabId}-content`) {
+                            content.classList.add('active');
+                        } else if (content.id === 'login-content' || content.id === 'register-content') {
+                            content.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        });
+        
+        // Switch tab from footer link
+        document.querySelectorAll('.switch-tab').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const tabId = link.getAttribute('data-tab');
+                document.querySelector(`.tab[data-tab="${tabId}"]`).click();
+            });
+        });
+        
+        // Form validation and submission
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const loginError = document.getElementById('login-error');
+        const registerError = document.getElementById('register-error');
+        
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            // Basic validation
+            if (!email || !password) {
+                loginError.textContent = "Please fill in all fields";
+                loginError.style.display = "block";
+                return;
+            }
+            
+            // Simulate login (in production this would be a server request)
+            console.log("Login submitted:", { email });
+            
+            // For demo purposes, show logout page
+            showLogoutPage();
+        });
+        
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const terms = document.getElementById('terms').checked;
+            
+            // Basic validation
+            if (!name || !email || !password || !confirmPassword) {
+                registerError.textContent = "Please fill in all fields";
+                registerError.style.display = "block";
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                registerError.textContent = "Passwords do not match";
+                registerError.style.display = "block";
+                return;
+            }
+            
+            if (!terms) {
+                registerError.textContent = "You must agree to the terms";
+                registerError.style.display = "block";
+                return;
+            }
+            
+            // Simulate registration (in production this would be a server request)
+            console.log("Registration submitted:", { name, email });
+            
+            // For demo purposes, show logout page
+            showLogoutPage();
+        });
+        
+        // Google authentication
+        document.getElementById('google-login').addEventListener('click', function() {
+            // In a real application, this would initiate Google OAuth flow
+            console.log("Google login initiated");
+            
+            // For demo purposes, show logout page
+            showLogoutPage();
+        });
+        
+        document.getElementById('google-register').addEventListener('click', function() {
+            // In a real application, this would initiate Google OAuth flow
+            console.log("Google registration initiated");
+            
+            // For demo purposes, show logout page
+            showLogoutPage();
+        });
+        
+        // Forgot password
+        document.getElementById('forgot-password').addEventListener('click', function(e) {
+            e.preventDefault();
+            const email = prompt("Please enter your email to reset your password:");
+            
+            if (email) {
+                alert(`Password reset instructions have been sent to ${email}`);
+            }
+        });
+        
+        // Back to login from logout page
+        document.getElementById('back-to-login').addEventListener('click', function() {
+            // Hide logout content and show login content
+            document.getElementById('logout-content').classList.remove('active');
+            document.getElementById('login-content').classList.add('active');
+            
+            // Update tabs
+            tabs.forEach(tab => {
+                if (tab.getAttribute('data-tab') === 'login') {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+        });
+        
+        // Function to show logout page
+        function showLogoutPage() {
+            // Hide all other content and show logout content
+            tabContents.forEach(content => content.classList.remove('active'));
+            document.getElementById('logout-content').classList.add('active');
+            
+            // Hide tabs (optional, depending on design preference)
+            tabs.forEach(tab => tab.classList.remove('active'));
+        }
+    </script>
+</header>
+</body>
+</html>

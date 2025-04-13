@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NutriTrack - Diet Planner Login</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+<link rel="stylesheet" href="index2.css">
+<link rel="stylesheet" href="index25.css">
+
+
+</head>
+<body>
+<div id="dashboard-page" style="display: block;">
+<header>
+<div class="logo">
+<div class="logo-icon">
+<i class="fas fa-leaf"></i>
+</div>
+<div class="logo-text">NutriTrack</div>
+</div>
+<nav>
+<ul>
+<li><a class="active" href="dash.html">Dashboard</a></li>
+<li><a href="nutrition-tracker.html" target="">N-Track</a></li>
+<li><a href="recipe.html">Recipes</a></li>
+<li><a href="user2.html">Profile</a></li>
+<li><a href="doctor.html">Doctors  </a></li>
+</ul>
+</nav>
+</header>
+<main>
+<div class="dashboard-header">
+<h1 class="dashboard-title">Your Nutrition Dashboard</h1>
+<div class="dashboard-date" id="current-date">April 11, 2025</div>
+</div>
+<div class="dashboard-grid">
+<div class="card">
+<div class="card-header">
+<h2 class="card-title">Daily Calories</h2>
+</div>
+<div class="nutrient-progress">
+<div class="nutrient-label">
+<span>Consumed</span>
+<span>1450 / 2000 cal</span>
+</div>
+<div class="progress-bar">
+<div class="progress-fill" style="width: 72.5%"></div>
+</div>
+</div>
+</div>
+<div class="card">
+<div class="card-header">
+<h2 class="card-title">Water Intake</h2>
+</div>
+<div class="water-tracker">
+<div class="water-glass filled"></div>
+<div class="water-glass filled"></div>
+<div class="water-glass filled"></div>
+<div class="water-glass filled"></div>
+<div class="water-glass"></div>
+<div class="water-glass"></div>
+<div class="water-glass"></div>
+<div class="water-glass"></div>
+</div>
+<div class="water-counter">4/8 glasses</div>
+</div>
+<div class="card">
+<div class="card-header">
+<h2 class="card-title">Macronutrients</h2>
+</div>
+<div class="nutrient-progress">
+<div class="nutrient-label">
+<span>Protein</span>
+<span>65 / 100g</span>
+</div>
+<div class="progress-bar">
+<div class="progress-fill" style="width: 65%; background-color: #3498db"></div>
+</div>
+</div>
+<div class="nutrient-progress">
+<div class="nutrient-label">
+<span>Carbs</span>
+<span>150 / 250g</span>
+</div>
+<div class="progress-bar">
+<div class="progress-fill" style="width: 60%; background-color: #f39c12"></div>
+</div>
+</div>
+<div class="nutrient-progress">
+<div class="nutrient-label">
+<span>Fat</span>
+<span>40 / 65g</span>
+</div>
+<div class="progress-bar">
+<div class="progress-fill" style="width: 61.5%; background-color: #e74c3c"></div>
+</div>
+</div>
+</div>
+<div class="card card-wide">
+<div class="card-header">
+<h2 class="card-title">Today's Meals Suggestion</h2>
+</div>
+<ul class="meal-list">
+<li class="meal-item">
+<div class="meal-name">
+<span class="meal-icon">🍳</span>
+<span>Breakfast: Spinach Omelette with Toast</span>
+</div>
+<div class="meal-calories">350 cal</div>
+</li>
+<li class="meal-item">
+<div class="meal-name">
+<span class="meal-icon">🥗</span>
+<span>Lunch: Quinoa Salad with Grilled Chicken</span>
+</div>
+<div class="meal-calories">520 cal</div>
+</li>
+<li class="meal-item">
+<div class="meal-name">
+<span class="meal-icon">🍎</span>
+<span>Snack: Apple with Almond Butter</span>
+</div>
+<div class="meal-calories">180 cal</div>
+</li>
+<li class="meal-item">
+<div class="meal-name">
+<span class="meal-icon">🍽️</span>
+<span>Dinner: Salmon with Roasted Vegetables</span>
+</div>
+<div class="meal-calories">400 cal</div>
+</li>
+</ul>
+<button class="add-meal-btn" id="add-meal-btn" onclick="window.location.href='nutrition-tracker.html'">Add New Meal</button>
+</div>
+<div class="card">
+    <div class="card-header">
+    <h2 class="card-title">Weekly Weight</h2>
+    </div>
+    <div class="chart-container" id="weight-chart">
+    <div class="chart-axis"></div>
+    <div class="chart-bar" style="left: 0%; height: 60%"></div>
+    <div class="chart-bar" style="left: 12.5%; height: 62%"></div>
+    <div class="chart-bar" style="left: 25%; height: 58%"></div>
+    <div class="chart-bar" style="left: 37.5%; height: 57%"></div>
+    <div class="chart-bar" style="left: 50%; height: 56%"></div>
+    <div class="chart-bar" style="left: 62.5%; height: 55%"></div>
+    <div class="chart-bar" style="left: 75%; height: 54%"></div>
+    </div>
+    <div class="chart-labels">
+    <span>Apr 5</span>
+    <span>Apr 6</span>
+    <span>Apr 7</span>
+    <span>Apr 8</span>
+    <span>Apr 9</span>
+    <span>Apr 10</span>
+    <span>Apr 11</span>
+    </div>
+    </div>
+    <div class="card card-tall">
+    <div class="card-header">
+    <h2 class="card-title">Weekly Diet Plan</h2>
+    </div>
+<div class="card card-wide">
+    <div class="card-header">
+      <h2 class="card-title">Search Nutrition Info</h2>
+    </div>
+    <div class="form-group">
+      <input type="text" id="food-query" placeholder="e.g. 2 eggs and toast" class="form-control"/>
+      <button class="add-meal-btn" onclick="fetchNutrition()">Get Nutrition Info</button>
+    </div>
+    <div id="nutrition-result"></div>
+  </div>
+<div class="diet-plan-day">
+<div class="day-header">Monday</div>
+<p>Breakfast: Greek yogurt with berries</p>
+<p>Lunch: Mediterranean wrap</p>
+<p>Dinner: Stir-fry vegetables with tofu</p>
+</div>
+<div class="diet-plan-day">
+<div class="day-header">Tuesday</div>
+<p>Breakfast: Avocado toast with eggs</p>
+<p>Lunch: Lentil soup with quinoa</p>
+<p>Dinner: Grilled fish with sweet potato</p>
+</div>
+<div class="diet-plan-day">
+<div class="day-header">Wednesday</div>
+<p>Breakfast: Smoothie bowl</p>
+<p>Lunch: Chicken and vegetable salad</p>
+<p>Dinner: Vegetable lasagna</p>
+</div>
+<div class="diet-plan-day">
+<div class="day-header">Thursday</div>
+<p>Breakfast: Oatmeal with nuts and fruits</p>
+<p>Lunch: Tuna wrap with vegetables</p>
+<p>Dinner: Turkey and vegetable stir-fry</p>
+</div>
+</div>
+<div class="card card-wide">
+<div class="card-header">
+<h2 class="card-title">Nutrition Insights</h2>
+</div>
+<div class="chart-container" id="nutrients-chart">
+<div class="chart-axis"></div>
+<div class="chart-bar" style="left: 5%; height: 80%; background-color: #3498db"></div>
+<div class="chart-bar" style="left: 25%; height: 65%; background-color: #f39c12"></div>
+<div class="chart-bar" style="left: 45%; height: 40%; background-color: #e74c3c"></div>
+<div class="chart-bar" style="left: 65%; height: 30%; background-color: #9b59b6"></div>
+<div class="chart-bar" style="left: 85%; height: 50%; background-color: #1abc9c"></div>
+</div>
+<div class="chart-labels">
+<span>Protein</span>
+<span>Carbs</span>
+<span>Fat</span>
+<span>Sugar</span>
+<span>Fiber</span>
+</div>
+</div>
+</div>
+</main>
+\</body></div>
+<footer>
+    <div class="container">
+      <p>© 2025 NutriTrack. All rights reserved.</p>
+    </div>
+  </footer>
+<script>
+
+async function fetchNutrition() {
+  const query = document.getElementById("food-query").value;
+  const resultDiv = document.getElementById("nutrition-result");
+
+  const response = await fetch("https://trackapi.nutritionix.com/v2/natural/nutrients", {
+    method: "POST",
+    headers: {
+      "x-app-id": "80501faf",
+      "x-app-key": "de2967e5a90a942370948fb27c783872",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ query })
+  });
+
+  const data = await response.json();
+  const food = data.foods?.[0];
+  if (food) {
+    resultDiv.innerHTML = `
+      <p><strong>Food:</strong> ${food.food_name}</p>
+      <p><strong>Calories:</strong> ${food.nf_calories}</p>
+      <p><strong>Protein:</strong> ${food.nf_protein} g</p>
+      <p><strong>Carbs:</strong> ${food.nf_total_carbohydrate} g</p>
+      <p><strong>Fat:</strong> ${food.nf_total_fat} g</p>
+    `;
+  } else {
+    resultDiv.innerHTML = "<p>Could not find nutrition info. Try a different food.</p>";
+  }
+}
+
+function showDashboardPage() {
+    document.getElementById("auth-page").style.display = "none";
+    document.getElementById("dashboard-page").style.display = "block";
+}
+
+// Modify showLogoutPage to show dashboard instead
+function showLogoutPage() {
+    showDashboardPage();
+}
+</script>
+</body>
+</html>

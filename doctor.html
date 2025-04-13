@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NutriTrack - Expert Doctors & Reviews</title>
+  <style>
+    :root {
+      --primary-color: #4CAF50;
+      --primary-light: #e8f5e9;
+      --primary-dark: #2E7D32;
+      --accent-color: #FF5722;
+      --light-gray: #f5f5f5;
+      --medium-gray: #e0e0e0;
+      --text-dark: #212121;
+      --text-medium: #616161;
+      --text-light: #9e9e9e;
+      --white: #ffffff;
+      --shadow: 0 2px 4px rgba(0,0,0,0.1);
+      --border-radius: 8px;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: var(--light-gray);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+    
+    .container {
+      width: 92%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    header {
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+      color: var(--white);
+      padding: 1.5rem 0;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    
+    .header-right {
+      display: flex;
+      align-items: center;
+    }
+    
+    .nav-link {
+      color: var(--white);
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-weight: 500;
+      transition: opacity 0.2s;
+    }
+    
+    .nav-link:hover {
+      opacity: 0.9;
+    }
+    
+    .main-heading {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--primary-dark);
+    }
+    
+    .subheading {
+      text-align: center;
+      color: var(--text-medium);
+      margin-bottom: 2.5rem;
+      font-size: 1.1rem;
+    }
+    
+    .filters {
+      background-color: var(--white);
+      padding: 1.5rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+    }
+    
+    .filters-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    
+    .filter-group {
+      flex-grow: 1;
+      min-width: 180px;
+    }
+    
+    .filter-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--text-medium);
+    }
+    
+    select, input {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid var(--medium-gray);
+      border-radius: var(--border-radius);
+      font-size: 1rem;
+      color: var(--text-dark);
+    }
+    
+    .search-input {
+      position: relative;
+    }
+    
+    .search-input input {
+      padding-right: 2.5rem;
+    }
+    
+    .search-icon {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-light);
+    }
+    
+    .doctors-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    
+    .doctor-card {
+      background: var(--white);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      border-top: 4px solid var(--primary-color);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .doctor-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .doctor-name {
+      color: var(--primary-dark);
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .doctor-specialty {
+      color: var(--text-medium);
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+    
+    .doctor-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .tag {
+      background-color: var(--primary-light);
+      color: var(--primary-dark);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    
+    .rating {
+      color: #FFB400;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .stats {
+      color: var(--text-medium);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    
+    .doctor-bio {
+      margin-bottom: 1.5rem;
+      color: var(--text-dark);
+    }
+    
+    .btn {
+      display: block;
+      width: 100%;
+      background: var(--primary-color);
+      color: var(--white);
+      border: none;
+      padding: 0.8rem;
+      border-radius: var(--border-radius);
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    
+    .btn:hover {
+      background: var(--primary-dark);
+    }
+    
+    .btn-outline {
+      background: transparent;
+      color: var(--primary-color);
+      border: 2px solid var(--primary-color);
+    }
+    
+    .btn-outline:hover {
+      background: var(--primary-light);
+      color: var(--primary-dark);
+    }
+    
+    .reviews-section {
+      margin-top: 4rem;
+    }
+    
+    .review-card {
+      background: var(--white);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--primary-color);
+    }
+    
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    
+    .review-author {
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+    
+    .review-date {
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+    
+    .review-doctor {
+      color: var(--primary-dark);
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    
+    .review-text {
+      color: var(--text-dark);
+      margin-bottom: 1rem;
+      font-style: italic;
+    }
+    
+    .review-actions {
+      display: flex;
+      justify-content: flex-end;
+      color: var(--text-medium);
+      font-size: 0.9rem;
+    }
+    
+    .action-btn {
+      background: transparent;
+      border: 1px solid var(--medium-gray);
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      margin-left: 0.8rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    .action-btn:hover {
+      background: var(--light-gray);
+    }
+    
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin: 2rem 0;
+    }
+    
+    .page-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 40px;
+      height: 40px;
+      margin: 0 0.3rem;
+      border-radius: var(--border-radius);
+      border: 1px solid var(--medium-gray);
+      color: var(--text-dark);
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    
+    .page-link.active {
+      background: var(--primary-color);
+      color: var(--white);
+      border-color: var(--primary-color);
+    }
+    
+    .page-link:hover:not(.active) {
+      background: var(--light-gray);
+    }
+    
+    .review-form {
+      background: var(--white);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      margin-top: 3rem;
+    }
+    
+    .form-heading {
+      margin-bottom: 1.5rem;
+      color: var(--primary-dark);
+    }
+    
+    .form-row {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--text-dark);
+    }
+    
+    textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid var(--medium-gray);
+      border-radius: var(--border-radius);
+      font-size: 1rem;
+      min-height: 120px;
+      resize: vertical;
+    }
+    
+    .star-input {
+      display: flex;
+      gap: 0.3rem;
+      margin-bottom: 1rem;
+    }
+    
+    .star-input label {
+      color: var(--medium-gray);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    
+    .star-input input {
+      display: none;
+    }
+    
+    .star-input label:hover,
+    .star-input label:hover ~ label,
+    .star-input input:checked ~ label {
+      color: #FFB400;
+    }
+    
+    footer {
+      background: var(--primary-dark);
+      color: var(--white);
+      padding: 1.5rem 0;
+      text-align: center;
+      margin-top: 4rem;
+    }
+    
+    .badge {
+      display: inline-block;
+      background: var(--accent-color);
+      color: white;
+      font-size: 0.8rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      margin-left: 0.5rem;
+      font-weight: bold;
+    }
+    
+    .section-divider {
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), transparent);
+      margin: 3rem 0;
+      border-radius: 2px;
+    }
+    
+    @media (max-width: 768px) {
+      .filters-row {
+        flex-direction: column;
+      }
+      
+      .doctors-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .header-right .nav-link:not(:last-child) {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">NutriTrack</div>
+        <div class="header-right">
+          <a href="#" class="nav-link" onclick="window.location.href='dash.html'">Dashboard</a>
+          <a href="#" class="nav-link" onclick="window.location.href='nutrition-track.html'">N-Track</a>
+          <a href="#" class="nav-link" onclick="window.location.href='recipe.html'">Recipes</a>
+          <a href="#" class="nav-link" onclick="window.location.href='user2.html'">Profile</a>
+          <a href="#" class="nav-link" onclick="window.location.href='doctor.html'">Doctors</a>
+
+
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1 class="main-heading">Expert Nutrition Consultants</h1>
+    <p class="subheading">Connect with certified professionals for personalized nutrition guidance</p>
+    
+    <div class="filters">
+      <div class="filters-row">
+        <div class="filter-group">
+          <label class="filter-label">Specialty</label>
+          <select>
+            <option>All Specialties</option>
+            <option>Weight Management</option>
+            <option>Sports Nutrition</option>
+            <option>Medical Nutrition</option>
+            <option>Plant-Based Diets</option>
+            <option>Pediatric Nutrition</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label">Rating</label>
+          <select>
+            <option>All Ratings</option>
+            <option>5 Stars</option>
+            <option>4+ Stars</option>
+            <option>3+ Stars</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label">Availability</label>
+          <select>
+            <option>Any Time</option>
+            <option>Today</option>
+            <option>Next 3 Days</option>
+            <option>This Week</option>
+            <option>Weekends Only</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label">Search</label>
+          <div class="search-input">
+            <input type="text" placeholder="Search by name or keyword">
+            <span class="search-icon">🔍</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="doctors-grid">
+      <div class="doctor-card">
+        <h3 class="doctor-name">Dr. Sarah Johnson</h3>
+        <p class="doctor-specialty">Clinical Dietitian, PhD</p>
+        <div class="doctor-tags">
+          <span class="tag">Weight Management</span>
+          <span class="tag">Diabetes</span>
+          <span class="tag">Heart Health</span>
+        </div>
+        <div class="rating">★★★★★</div>
+        <p class="stats">127 consultations • 98% satisfaction</p>
+        <p class="doctor-bio">Specializes in evidence-based nutrition approaches for chronic disease management and weight control, with over 15 years of clinical experience.</p>
+        <button class="btn">Book Consultation</button>
+      </div>
+      
+      <div class="doctor-card">
+        <h3 class="doctor-name">Dr. Michael Chen</h3>
+        <p class="doctor-specialty">Sports Nutritionist, MS, RD</p>
+        <div class="doctor-tags">
+          <span class="tag">Athletic Performance</span>
+          <span class="tag">Muscle Building</span>
+          <span class="tag">Recovery</span>
+        </div>
+        <div class="rating">★★★★☆</div>
+        <p class="stats">94 consultations • 95% satisfaction</p>
+        <p class="doctor-bio">Expert in performance nutrition for athletes at all levels. Creates customized plans for training, competition, and recovery optimization.</p>
+        <button class="btn">Book Consultation</button>
+      </div>
+      
+      <div class="doctor-card">
+        <h3 class="doctor-name">Dr. Lisa Patel</h3>
+        <p class="doctor-specialty">Pediatric Nutritionist, MD</p>
+        <div class="doctor-tags">
+          <span class="tag">Child Nutrition</span>
+          <span class="tag">Food Allergies</span>
+          <span class="tag">Picky Eaters</span>
+        </div>
+        <div class="rating">★★★★★</div>
+        <p class="stats">156 consultations • 99% satisfaction <span class="badge">Top Rated</span></p>
+        <p class="doctor-bio">Specialized in pediatric nutrition, helping families navigate food allergies, sensitivities, and developmental feeding challenges.</p>
+        <button class="btn">Book Consultation</button>
+      </div>
+      
+      <div class="doctor-card">
+        <h3 class="doctor-name">Dr. Marcus Williams</h3>
+        <p class="doctor-specialty">Holistic Nutritionist, ND</p>
+        <div class="doctor-tags">
+          <span class="tag">Plant-Based</span>
+          <span class="tag">Gut Health</span>
+          <span class="tag">Autoimmune</span>
+        </div>
+        <div class="rating">★★★★☆</div>
+        <p class="stats">87 consultations • 92% satisfaction</p>
+        <p class="doctor-bio">Focuses on whole-food nutrition approaches that address root causes of health issues, particularly digestive and inflammatory conditions.</p>
+        <button class="btn">Book Consultation</button>
+      </div>
+      
+      <div class="doctor-card">
+        <h3 class="doctor-name">Dr. Fatima Rahman</h3>
+        <p class="doctor-specialty">Nutrition Psychologist, PhD</p>
+        <div class="doctor-tags">
+          <span class="tag">Emotional Eating</span>
+          <span class="tag">Mindfulness</span>
+          <span class="tag">Behavior Change</span>
+        </div>
+        <div class="rating">★★★★★</div>
+        <p class="stats">102 consultations • 97% satisfaction</p>
+        <p class="doctor-bio">Combines nutrition science with psychology to help clients develop healthier relationships with food and sustainable eating patterns.</p>
+        <button class="btn">Book Consultation</button>
+      </div>
+      
+      <div class="doctor-card">
+        <h3 class="doctor-name">Dr. James Walker</h3>
+        <p class="doctor-specialty">Geriatric Nutritionist, MPH, RD</p>
+        <div class="doctor-tags">
+          <span class="tag">Senior Health</span>
+          <span class="tag">Meal Planning</span>
+          <span class="tag">Chronic Disease</span>
+        </div>
+        <div class="rating">★★★★☆</div>
+        <p class="stats">78 consultations • 94% satisfaction</p>
+        <p class="doctor-bio">Specializes in nutrition for older adults, focusing on maintaining quality of life and managing age-related health conditions through diet.</p>
+        <button class="btn">Book Consultation</button>
+      </div>
+    </div>
+    
+    <div class="section-divider"></div>
+    
+    <div class="reviews-section">
+      <h2 class="main-heading">Client Reviews & Feedback</h2>
+      <p class="subheading">See what our clients have to say about their consultation experiences</p>
+      
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-author">Jennifer Thompson</div>
+          <div class="review-date">April 5, 2025</div>
+        </div>
+        <div class="rating">★★★★★</div>
+        <div class="review-doctor">Consultation with: Dr. Sarah Johnson</div>
+        <p class="review-text">"My consultation with Dr. Johnson was life-changing. She took time to understand my history with type 2 diabetes and created a sustainable eating plan that has helped me reduce my medication. She explained everything clearly and answered all my questions. Three months in, my blood sugar readings are the best they've been in years!"</p>
+        <div class="review-actions">
+          Was this helpful?
+          <button class="action-btn">Yes (24)</button>
+          <button class="action-btn">No (2)</button>
+        </div>
+      </div>
+      
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-author">Robert Mitchell</div>
+          <div class="review-date">April 2, 2025</div>
+        </div>
+        <div class="rating">★★★★★</div>
+        <div class="review-doctor">Consultation with: Dr. Michael Chen</div>
+        <p class="review-text">"As a recreational runner training for my first marathon, I needed help optimizing my nutrition for training and race day. Dr. Chen provided a detailed fueling strategy that has improved my energy levels during long runs and shortened my recovery time. His sports nutrition knowledge is impressive, and he made everything practical for someone with a busy schedule."</p>
+        <div class="review-actions">
+          Was this helpful?
+          <button class="action-btn">Yes (18)</button>
+          <button class="action-btn">No (0)</button>
+        </div>
+      </div>
+      
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-author">Sophia Rodriguez</div>
+          <div class="review-date">March 28, 2025</div>
+        </div>
+        <div class="rating">★★★★☆</div>
+        <div class="review-doctor">Consultation with: Dr. Lisa Patel</div>
+        <p class="review-text">"Dr. Patel was incredibly helpful with my 5-year-old's newly diagnosed gluten sensitivity. She provided age-appropriate food suggestions that my picky eater actually enjoys! The only reason for 4 stars instead of 5 is that the initial meal plan required some ingredients that were hard to find. However, when I mentioned this, she quickly adjusted with more accessible alternatives."</p>
+        <div class="review-actions">
+          Was this helpful?
+          <button class="action-btn">Yes (12)</button>
+          <button class="action-btn">No (1)</button>
+        </div>
+      </div>
+      
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-author">Carlos Diaz</div>
+          <div class="review-date">March 25, 2025</div>
+        </div>
+        <div class="rating">★★★★★</div>
+        <div class="review-doctor">Consultation with: Dr. Marcus Williams</div>
+        <p class="review-text">"After struggling with IBS for years and trying numerous diets without success, my consultation with Dr. Williams was a breath of fresh air. His holistic approach identified food triggers I hadn't considered, and his supplementation recommendations have dramatically improved my symptoms. I appreciate that he focuses on adding nourishing foods rather than just eliminating problem ones."</p>
+        <div class="review-actions">
+          Was this helpful?
+          <button class="action-btn">Yes (32)</button>
+          <button class="action-btn">No (3)</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="review-form">
+      <h3 class="form-heading">Share Your Experience</h3>
+      <p style="margin-bottom: 1.5rem;">Had a consultation with one of our nutrition experts? Let others know about your experience.</p>
+      
+      <form>
+        <div class="form-row">
+          <label class="form-label">Which doctor did you consult with?</label>
+          <select>
+            <option>Select a doctor</option>
+            <option>Dr. Sarah Johnson</option>
+            <option>Dr. Michael Chen</option>
+            <option>Dr. Lisa Patel</option>
+            <option>Dr. Marcus Williams</option>
+            <option>Dr. Fatima Rahman</option>
+            <option>Dr. James Walker</option>
+          </select>
+        </div>
+        
+        <div class="form-row">
+          <label class="form-label">How would you rate your consultation?</label>
+          <div class="star-input">
+            <input type="radio" id="star5" name="rating" value="5">
+            <label for="star5">★</label>
+            <input type="radio" id="star4" name="rating" value="4">
+            <label for="star4">★</label>
+            <input type="radio" id="star3" name="rating" value="3">
+            <label for="star3">★</label>
+            <input type="radio" id="star2" name="rating" value="2">
+            <label for="star2">★</label>
+            <input type="radio" id="star1" name="rating" value="1">
+            <label for="star1">★</label>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <label class="form-label">Your review</label>
+          <textarea placeholder="Share the details of your consultation experience..."></textarea>
+        </div>
+        
+        <button type="button" class="btn">Submit Review</button>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 NutriTrack. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Simple interactive elements
+    document.addEventListener('DOMContentLoaded', function() {
+      // Star rating interaction
+      const starLabels = document.querySelectorAll('.star-input label');
+      starLabels.forEach(star => {
+        star.addEventListener('click', function() {
+          // Reset all stars
+          starLabels.forEach(s => s.style.color = '#e0e0e0');
+          
+          // Set clicked star and all previous stars to gold
+          this.style.color = '#FFB400';
+          let prevSibling = this.previousElementSibling;
+          
+          while(prevSibling) {
+            if(prevSibling.tagName === 'LABEL') {
+              prevSibling.style.color = '#FFB400';
+            }
+            prevSibling = prevSibling.previousElementSibling;
+          }
+        });
+      });
+      
+      // Helpful buttons interaction
+      const helpfulBtns = document.querySelectorAll('.action-btn');
+      helpfulBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          // Extract current count from button text
+          const currentText = this.textContent;
+          const count = parseInt(currentText.match(/\d+/)[0]);
+          
+          // Update count
+          this.textContent = currentText.replace(/\d+/, count + 1);
+          
+          // Disable both buttons in this review
+          const actionDiv = this.parentElement;
+          actionDiv.querySelectorAll('button').forEach(button => {
+            button.disabled = true;
+            button.style.opacity = '0.6';
+          });
+          
+          // Add feedback message
+          const thankYou = document.createElement('span');
+          thankYou.textContent = ' Thank you for your feedback!';
+          thankYou.style.color = '#4CAF50';
+          thankYou.style.marginLeft = '10px';
+          actionDiv.appendChild(thankYou);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

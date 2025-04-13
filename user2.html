@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriTrack - Personal Health Assessment</title>
+    <link rel="stylesheet" href="user2.css">
+
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>NutriTrack</h1>
+            <h2>Your Personal Health & Nutrition Tracker</h2>
+        </div>
+        
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-bar">
+                <div class="progress-bar-fill" id="progressBarFill"></div>
+            </div>
+            <div class="progress-steps">
+                <div class="step active" data-step="1">
+                    <div class="step-icon">1</div>
+                    <div class="step-label">Basic Info</div>
+                </div>
+                <div class="step" data-step="2">
+                    <div class="step-icon">2</div>
+                    <div class="step-label">Health</div>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="step-icon">3</div>
+                    <div class="step-label">Goals</div>
+                </div>
+                <div class="step" data-step="4">
+                    <div class="step-icon">4</div>
+                    <div class="step-label">Results</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step-content active" id="step1">
+            <form id="userDataForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" min="13" max="120" placeholder="Your age in years" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender" required>
+                        <option value="" disabled selected>Select your gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="height">Height (cm)</label>
+                    <input type="number" id="height" min="50" max="250" placeholder="Your height in centimeters" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="weight">Weight (kg)</label>
+                    <input type="number" id="weight" min="20" max="500" placeholder="Your weight in kilograms" required>
+                </div>
+                
+                <div class="button-group">
+                    <div></div>
+                    <button type="button" class="btn-primary" id="nextToStep2">Next: Health Information</button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="step-content" id="step2">
+            <div class="health-conditions">
+                <h3>Do you have any health conditions?</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="diabetes" name="health-condition" value="diabetes">
+                        <label for="diabetes">Diabetes</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="hypertension" name="health-condition" value="hypertension">
+                        <label for="hypertension">Hypertension</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="cholesterol" name="health-condition" value="cholesterol">
+                        <label for="cholesterol">High Cholesterol</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="athlete" name="health-condition" value="athlete">
+                        <label for="athlete">Athlete/Bodybuilder</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="pregnant" name="health-condition" value="pregnant">
+                        <label for="pregnant">Pregnant</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="thyroid" name="health-condition" value="thyroid">
+                        <label for="thyroid">Thyroid Issues</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="activityLevel">Activity Level</label>
+                <select id="activityLevel" required>
+                    <option value="" disabled selected>Select your activity level</option>
+                    <option value="sedentary">Sedentary (little or no exercise)</option>
+                    <option value="light">Lightly active (light exercise 1-3 days/week)</option>
+                    <option value="moderate">Moderately active (moderate exercise 3-5 days/week)</option>
+                    <option value="active">Active (hard exercise 6-7 days/week)</option>
+                    <option value="very_active">Very active (very hard exercise & physical job)</option>
+                </select>
+            </div>
+            
+            <div class="button-group">
+                <button type="button" class="btn-secondary" id="backToStep1">Previous</button>
+                <button type="button" class="btn-primary" id="nextToStep3">Next: Goals</button>
+            </div>
+        </div>
+        
+        <div class="step-content" id="step3">
+            <div class="form-group">
+                <label for="goal">What is your primary goal?</label>
+                <select id="goal" required>
+                    <option value="" disabled selected>Select your primary goal</option>
+                    <option value="lose">Lose Weight</option>
+                    <option value="maintain">Maintain Weight</option>
+                    <option value="gain">Gain Weight</option>
+                    <option value="muscle">Build Muscle</option>
+                    <option value="health">Improve Overall Health</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="dietPreference">Dietary Preference</label>
+                <select id="dietPreference">
+                    <option value="none">No Specific Preference</option>
+                    <option value="vegetarian">Vegetarian</option>
+                    <option value="vegan">Vegan</option>
+                    <option value="keto">Keto</option>
+                    <option value="High-Protein">High-Protein</option>
+                    <option value="Meat-driven">Meat-driven</option>
+                    <option value="low_carb">Low Carb</option>
+                </select>
+            </div>
+            
+            <div class="button-group">
+                <button type="button" class="btn-secondary" id="backToStep2">Previous</button>
+                <button type="button" class="btn-success" id="calculateBtn">Calculate Results</button>
+            </div>
+        </div>
+        
+        <div class="step-content" id="step4">
+            <div class="results" id="results">
+                <h2>Your Health Assessment Results</h2>
+                
+                <div class="result-card">
+                    <div class="result-card-header">Basic Information</div>
+                    <div class="result-card-body">
+                        <table>
+                            <tr>
+                                <td>Name</td>
+                                <td id="result-name"></td>
+                            </tr>
+                            <tr>
+                                <td>Age</td>
+                                <td id="result-age"></td>
+                            </tr>
+                            <tr>
+                                <td>Gender</td>
+                                <td id="result-gender"></td>
+                            </tr>
+                            <tr>
+                                <td>Height</td>
+                                <td id="result-height"></td>
+                            </tr>
+                            <tr>
+                                <td>Weight</td>
+                                <td id="result-weight"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="result-card-header">Body Mass Index (BMI)</div>
+                    <div class="result-card-body">
+                        <table>
+                            <tr>
+                                <td>Your BMI</td>
+                                <td id="result-bmi"></td>
+                            </tr>
+                            <tr>
+                                <td>BMI Category</td>
+                                <td><span id="result-bmi-category" class="bmi-category"></span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="result-card-header">Daily Caloric Needs</div>
+                    <div class="result-card-body">
+                        <table>
+                            <tr>
+                                <td>Basal Metabolic Rate (BMR)</td>
+                                <td id="result-bmr"></td>
+                            </tr>
+                            <tr>
+                                <td>Maintenance Calories</td>
+                                <td id="result-maintenance"></td>
+                            </tr>
+                            <tr>
+                                <td>Recommended Daily Intake</td>
+                                <td id="result-recommended"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="recommendations" id="recommendations">
+                    <h3>Personalized Recommendations</h3>
+                    <div id="recommendation-text"></div>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button type="button" class="btn-secondary" id="backToStep3">Previous</button>
+                <button type="button" class="btn-primary" id="startOverBtn">Start Over</button>
+                <button type="submit" onclick="window.location.href='dash.html'">Done</button>
+            </div>
+        </div>
+    </div>
+
+      
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM elements
+            const progressContainer = document.getElementById('progressContainer');
+            const progressBarFill = document.getElementById('progressBarFill');
+            const steps = document.querySelectorAll('.step-content');
+            const progressSteps = document.querySelectorAll('.step');
+            
+            // Set initial progress
+            updateProgress(1);
+            
+            // Navigation buttons
+            document.getElementById('nextToStep2').addEventListener('click', function() {
+                if (validateStep1()) {
+                    showStep(2);
+                }
+            });
+            
+            document.getElementById('backToStep1').addEventListener('click', function() {
+                showStep(1);
+            });
+            
+            document.getElementById('nextToStep3').addEventListener('click', function() {
+                showStep(3);
+            });
+            
+            document.getElementById('backToStep2').addEventListener('click', function() {
+                showStep(2);
+            });
+            
+            document.getElementById('backToStep3').addEventListener('click', function() {
+                showStep(3);
+            });
+            
+            document.getElementById('calculateBtn').addEventListener('click', function() {
+                calculateResults();
+                showStep(4);
+            });
+            
+            document.getElementById('startOverBtn').addEventListener('click', function() {
+                resetForm();
+                showStep(1);
+            });
+            
+            // Update progress bar and steps
+            function updateProgress(stepNumber) {
+                const percent = ((stepNumber - 1) / 3) * 100;
+                progressBarFill.style.width = `${percent}%`;
+                
+                progressSteps.forEach(step => {
+                    const stepNum = parseInt(step.getAttribute('data-step'));
+                    
+                    if (stepNum < stepNumber) {
+                        step.classList.remove('active');
+                        step.classList.add('completed');
+                    } else if (stepNum === stepNumber) {
+                        step.classList.add('active');
+                        step.classList.remove('completed');
+                    } else {
+                        step.classList.remove('active');
+                        step.classList.remove('completed');
+                    }
+                });
+            }
+            
+            // Show specific step
+            function showStep(stepNumber) {
+                // Update progress indicator
+                updateProgress(stepNumber);
+                
+                // Show the current step content
+                steps.forEach(step => {
+                    step.classList.remove('active');
+                });
+                document.getElementById(`step${stepNumber}`).classList.add('active');
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            
+            // Validate Step 1 inputs
+            function validateStep1() {
+                const name = document.getElementById('name').value;
+                const age = document.getElementById('age').value;
+                const gender = document.getElementById('gender').value;
+                const height = document.getElementById('height').value;
+                const weight = document.getElementById('weight').value;
+                
+                if (!name || !age || !gender || !height || !weight) {
+                    alert('Please fill in all required fields.');
+                    return false;
+                }
+                
+                return true;
+            }
+            
+            // Reset the form
+            function resetForm() {
+                document.getElementById('userDataForm').reset();
+                document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                document.getElementById('activityLevel').value = '';
+                document.getElementById('goal').value = '';
+                document.getElementById('dietPreference').value = 'none';
+            }
+            
+            // Calculate BMI and other health metrics
+            function calculateResults() {
+                // Get form values
+                const name = document.getElementById('name').value;
+                const age = parseInt(document.getElementById('age').value);
+                const gender = document.getElementById('gender').value;
+                const height = parseFloat(document.getElementById('height').value);
+                const weight = parseFloat(document.getElementById('weight').value);
+                const activityLevel = document.getElementById('activityLevel').value;
+                const goal = document.getElementById('goal').value;
+                const dietPreference = document.getElementById('dietPreference').value;
+                
+                // Get health conditions
+                const healthConditions = [];
+                document.querySelectorAll('input[name="health-condition"]:checked').forEach(checkbox => {
+                    healthConditions.push(checkbox.value);
+                });
+                
+                // Calculate BMI
+                const heightInMeters = height / 100;
+                const bmi = weight / (heightInMeters * heightInMeters);
+                
+                // Determine BMI category
+                let bmiCategory, bmiCategoryClass;
+                if (bmi < 18.5) {
+                    bmiCategory = "Underweight";
+                    bmiCategoryClass = "underweight";
+                } else if (bmi >= 18.5 && bmi < 25) {
+                    bmiCategory = "Normal weight";
+                    bmiCategoryClass = "normal";
+                } else if (bmi >= 25 && bmi < 30) {
+                    bmiCategory = "Overweight";
+                    bmiCategoryClass = "overweight";
+                } else {
+                    bmiCategory = "Obese";
+                    bmiCategoryClass = "obese";
+                }
+                
+                // Calculate BMR (Basal Metabolic Rate) using Mifflin-St Jeor Equation
+                let bmr;
+                if (gender === 'male') {
+                    bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+                } else {
+                    bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+                }
+                
+                // Calculate maintenance calories based on activity level
+                let maintenanceCalories;
+                switch(activityLevel) {
+                    case 'sedentary':
+                        maintenanceCalories = bmr * 1.2;
+                        break;
+                    case 'light':
+                        maintenanceCalories = bmr * 1.375;
+                        break;
+                    case 'moderate':
+                        maintenanceCalories = bmr * 1.55;
+                        break;
+                    case 'active':
+                        maintenanceCalories = bmr * 1.725;
+                        break;
+                    case 'very_active':
+                        maintenanceCalories = bmr * 1.9;
+                        break;
+                    default:
+                        maintenanceCalories = bmr * 1.2;
+                }
+                
+                // Calculate recommended daily calories based on goal
+                let recommendedCalories, goalDescription;
+                switch(goal) {
+                    case 'lose':
+                        recommendedCalories = maintenanceCalories - 500;
+                        goalDescription = "Weight Loss";
+                        break;
+                    case 'gain':
+                        recommendedCalories = maintenanceCalories + 500;
+                        goalDescription = "Weight Gain";
+                        break;
+                    case 'muscle':
+                        recommendedCalories = maintenanceCalories + 300;
+                        goalDescription = "Muscle Building";
+                        break;
+                    default:
+                        recommendedCalories = maintenanceCalories;
+                        goalDescription = "Weight Maintenance";
+                }
+                
+                // Display results
+                document.getElementById('result-name').textContent = name;
+                document.getElementById('result-age').textContent = age;
+                document.getElementById('result-gender').textContent = gender.charAt(0).toUpperCase() + gender.slice(1);
+                document.getElementById('result-height').textContent = height + " cm";
+                document.getElementById('result-weight').textContent = weight + " kg";
+                document.getElementById('result-bmi').textContent = bmi.toFixed(1);
+                
+                const bmiCategoryElement = document.getElementById('result-bmi-category');
+                bmiCategoryElement.textContent = bmiCategory;
+                bmiCategoryElement.className = `bmi-category ${bmiCategoryClass}`;
+                
+                document.getElementById('result-bmr').textContent = Math.round(bmr) + " calories/day";
+                document.getElementById('result-maintenance').textContent = Math.round(maintenanceCalories) + " calories/day";
+                document.getElementById('result-recommended').textContent = Math.round(recommendedCalories) + " calories/day for " + goalDescription;
+                
+                // Generate personalized recommendations
+                generateRecommendations(bmi, bmiCategory, healthConditions, goal, dietPreference);
+                
+                // Show results
+                document.getElementById('results').style.display = 'block';
+            }
+            
+            // Generate personalized recommendations
+            function generateRecommendations(bmi, bmiCategory, healthConditions, goal, dietPreference) {
+                let recommendations = "";
+
+// General BMI advice
+if (bmiCategory === "Underweight") {
+    recommendations += "<p>You are underweight. It's important to gain weight healthily through a balanced diet rich in calories and nutrients.</p>";
+} else if (bmiCategory === "Overweight" || bmiCategory === "Obese") {
+    recommendations += "<p>You are " + bmiCategory.toLowerCase() + ". Focus on reducing weight through consistent activity and a calorie-controlled diet.</p>";
+} else {
+    recommendations += "<p>Your BMI is in the normal range. Maintain your current habits for continued good health.</p>";
+}
+
+// Goal-specific tips
+switch (goal) {
+    case 'lose':
+        recommendations += "<p><strong>Tip:</strong> Aim for a calorie deficit of 500–750 calories/day for sustainable weight loss.</p>";
+        break;
+    case 'gain':
+        recommendations += "<p><strong>Tip:</strong> Include more calorie-dense, nutrient-rich foods in your diet.</p>";
+        break;
+    case 'muscle':
+        recommendations += "<p><strong>Tip:</strong> Combine strength training with increased protein intake and moderate calorie surplus.</p>";
+        break;
+    case 'health':
+        recommendations += "<p><strong>Tip:</strong> Focus on a diverse and balanced diet rich in fiber, antioxidants, and healthy fats.</p>";
+        break;
+    default:
+        recommendations += "<p>Maintain your current eating and activity habits to stay healthy.</p>";
+}
+
+// Dietary preference-based tips
+if (dietPreference !== "none") {
+    recommendations += `<p><strong>Diet Type:</strong> You have selected a <em>${dietPreference.replace("_", " ")}</em> dietary plan. Ensure it's nutritionally adequate.</p>`;
+}
+
+// Health condition-based recommendations
+if (healthConditions.length > 0) {
+    recommendations += "<ul><strong>Additional considerations based on your health conditions:</strong>";
+    if (healthConditions.includes("diabetes")) {
+        recommendations += "<li>Manage carbohydrate intake and monitor blood sugar levels regularly.</li>";
+    }
+    if (healthConditions.includes("hypertension")) {
+        recommendations += "<li>Limit salt and processed foods; include potassium-rich fruits and vegetables.</li>";
+    }
+    if (healthConditions.includes("cholesterol")) {
+        recommendations += "<li>Focus on fiber-rich foods and reduce saturated fats.</li>";
+    }
+    if (healthConditions.includes("thyroid")) {
+        recommendations += "<li>Ensure consistent iodine intake; follow medical guidance for thyroid medication.</li>";
+    }
+    if (healthConditions.includes("athlete")) {
+        recommendations += "<li>Maintain high protein and complex carb intake for energy and recovery.</li>";
+    }
+    if (healthConditions.includes("pregnant")) {
+        recommendations += "<li>Consume a variety of nutrients and prenatal vitamins as recommended by your doctor.</li>";
+    }
+    recommendations += "</ul>";
+}
+
+recommendations += "<em>Always consult with a healthcare provider or registered dietitian before making major lifestyle changes.</em>";
+
+document.getElementById("recommendation-text").innerHTML = recommendations;
+}
+});
+</script>
+</body>
+</html>
